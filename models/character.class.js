@@ -8,6 +8,7 @@ class Character extends MovableObject {
         '../img/2_character_pepe/2_walk/W-25.png',
         '../img/2_character_pepe/2_walk/W-26.png'
     ]
+    world;
 
 
     constructor(){
