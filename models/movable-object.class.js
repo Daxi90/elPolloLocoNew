@@ -11,9 +11,10 @@ class MovableObject{
     speedY = 0;
     acceleration = 2.5;
 
+
     applyGravity(){
         setInterval(() => {
-            if(this.isAboveGround()){
+            if(this.isAboveGround() || this.speedY > 0){
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
@@ -45,19 +46,12 @@ class MovableObject{
     }
 
     moveRight(){
-        console.log('Moving right');
+        this.x += this.speed;
+        this.walking_sound.play();
     }
 
     moveLeft(){
-        setInterval(() => {
-            if(this.x > -450){
-                this.x -= this.speed;
-            }else{
-                this.x = 800;
-            }
-            
-        }, 1000/60);
-
+        this.x -= this.speed;
     }
 
     playAnimation(images){
@@ -66,5 +60,9 @@ class MovableObject{
         let path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;   
+    }
+
+    jump(){
+        return this.speedY = 30;
     }
 }
