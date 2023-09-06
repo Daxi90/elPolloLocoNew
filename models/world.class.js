@@ -10,6 +10,7 @@ class World {
   coinBar = new CoinBar();
   bottleBar = new BottleBar();
   throwableObjects = [];
+  lastThrown = 0;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -29,12 +30,17 @@ class World {
       this.checkCollisions();
       this.checkThrowObjects();
     }, 50);
+
   }
 
   checkThrowObjects(){
-    if(this.keyboard.D){
+    const currentTime = Date.now();
+    const oneSecond = 1000;
+
+    if(this.keyboard.D && currentTime - this.lastThrown > oneSecond){
       let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
       this.throwableObjects.push(bottle);
+      this.lastThrown = currentTime; // Aktualisiere den Zeitstempel
     }
   }
 

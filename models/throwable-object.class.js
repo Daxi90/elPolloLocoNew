@@ -17,5 +17,15 @@ class ThrowableObject extends MovableObject{
         setInterval(() => {
            this.x += 10; 
         }, 25);
+
+        this.lastThrown = Date.now();
     }
+
+    canBeThrown() {
+        const currentTime = Date.now();
+        const oneSecond = 1000;
+        return currentTime - this.lastThrown > oneSecond;
+    }
+
+      
 }
