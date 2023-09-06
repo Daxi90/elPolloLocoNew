@@ -4,8 +4,13 @@ let keyboard = new Keyboard();
 
 
 function init(){
+    document.getElementById('startScreen').classList.add('d-none');
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);    
+}
+
+function hideStartScreen(){
+    
 }
 
 window.addEventListener('keydown', (e) =>{

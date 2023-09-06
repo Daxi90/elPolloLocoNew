@@ -9,3 +9,33 @@ canvas{
     background-color: black;
 }
 
+.d-none{
+    display: none;
+}
+
+#startScreen{
+    background-image: url(./img/9_intro_outro_screens/start/startscreen_2.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left:0;
+    right: 0;
+}
+
+#startScreen button{
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    background-color: #ff9600;
+    color: white;
+    border:none;
+    width: 350px;
+    height: 100px;
+    transform: translateX(-50%);
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 35px;
+    box-shadow: 5px 5px 5px black;
+}
