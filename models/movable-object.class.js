@@ -1,12 +1,5 @@
-class MovableObject {
-  x = 120;
-  y = 190;
-  img;
-  height = 250;
-  width = 150;
+class MovableObject extends DrawableObject {
   speed = 0.15;
-  imageCache = {};
-  currentImage = 0;
   otherDirection = false;
   speedY = 0;
   acceleration = 2.5;
@@ -23,38 +16,12 @@ class MovableObject {
   }
 
   isAboveGround() {
-    return this.y < 180;
-  }
-
-  loadImage(path) {
-    this.img = new Image();
-    this.img.src = path;
-  }
-
-  /**
-   *
-   * @param {Array} arr - ['img/image1.png','img/image2.png', ...]
-   */
-  loadImages(arr) {
-    arr.forEach((path) => {
-      let img = new Image();
-      img.src = path;
-      this.imageCache[path] = img;
-    });
-  }
-
-  draw(ctx) {
-    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-  }
-
-  drawFrame(ctx) {
-    if (this instanceof Character || this instanceof Chicken) {
-      ctx.beginPath();
-      ctx.lineWidth = "5";
-      ctx.strokeStyle = "blue";
-      ctx.rect(this.x, this.y, this.width, this.height);
-      ctx.stroke();
+    if(this instanceof ThrowableObject){ // Throwable object should always fall
+      return true;
+    }else{
+      return this.y < 180;
     }
+    
   }
 
   moveRight() {
@@ -103,22 +70,20 @@ class MovableObject {
   hit() {
     this.energy -= 2;
 
-    if(this.energy < 0){
-        this.energy = 0;
-    }else{
-        this.lastHit = new Date().getTime();
+    if (this.energy < 0) {
+      this.energy = 0;
+    } else {
+      this.lastHit = new Date().getTime();
     }
   }
 
-  isDead(){
+  isDead() {
     return this.energy == 0;
   }
 
-  isHurt(obj){
+  isHurt(obj) {
     let timepassed = new Date().getTime() - this.lastHit; // Difference in ms
     timepassed = timepassed / 1000; // Difference in seconds
-    return timepassed < 3;
+    return timepassed < 1;
   }
-
-
 }
