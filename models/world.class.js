@@ -29,9 +29,26 @@ class World {
     setInterval(() => {
       this.checkCollisions();
       this.checkThrowObjects();
+      this.checkCharacterDead();
     }, 50);
 
   }
+
+  checkCharacterDead(){
+    if(this.character.energy == 0){
+      this.showEndScreen();
+      this.clearAllIntervals();
+    }
+  }
+
+  showEndScreen(){
+    document.getElementById('endScreen').classList.remove('d-none');
+  }
+
+  /* Alternative (quick and dirty), um alle Intervalle zu beenden. */
+clearAllIntervals() {
+  for (let i = 1; i < 9999; i++) window.clearInterval(i);
+}
 
   checkThrowObjects(){
     const currentTime = Date.now();
