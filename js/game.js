@@ -4,15 +4,15 @@ let keyboard = new Keyboard();
 
 
 function init(){
+    
     document.getElementById('startScreen').classList.add('d-none');
     document.getElementById('endScreen').classList.add('d-none');
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);    
+    world.level = createNewLevel();
 }
 
-function clearAllIntervals() {
-    for (let i = 1; i < 9999; i++) window.clearInterval(i);
-}
+
 
 window.addEventListener('keydown', (e) =>{
     if(e.keyCode == 32){

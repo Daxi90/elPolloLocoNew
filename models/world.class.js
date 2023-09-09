@@ -21,6 +21,8 @@ class World {
     this.run();
   }
 
+  
+
   setWorld() {
     this.character.world = this;
   }
@@ -37,7 +39,8 @@ class World {
   checkCharacterDead(){
     if(this.character.energy == 0){
       this.showEndScreen();
-      clearAllIntervals();
+      this.clearAllIntervals();
+      this.character.walking_sound.pause();
     }
   }
 
