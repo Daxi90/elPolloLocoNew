@@ -4,6 +4,7 @@ let keyboard = new Keyboard();
 
 
 function init(){
+    initLevel();
     document.getElementById('startScreen').classList.add('d-none');
     document.getElementById('endScreen').classList.add('d-none');
     canvas = document.getElementById('canvas');
@@ -12,9 +13,7 @@ function init(){
   
 }
 
-function hideStartScreen(){
-    
-}
+
 
 window.addEventListener('keydown', (e) =>{
     if(e.keyCode == 32){

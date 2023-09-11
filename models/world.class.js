@@ -21,6 +21,8 @@ class World {
     this.run();
   }
 
+  
+
   setWorld() {
     this.character.world = this;
   }
@@ -38,6 +40,7 @@ class World {
     if(this.character.energy == 0){
       this.showEndScreen();
       this.clearAllIntervals();
+      this.character.walking_sound.pause();
     }
   }
 
@@ -64,13 +67,18 @@ clearAllIntervals() {
   checkCollisions(){
       //Check collision
       this.level.enemies.forEach((enemy) => {
-        if (this.character.isColliding(enemy)) {
+        if (this.canCharacterHit(enemy)) {
           /* console.log("Collision with Character", enemy); */
           this.character.hit();
           this.healthBar.setPercentage(this.character.energy);
           console.log("Collision", this.character.energy)
         }
       });
+  }
+
+
+  canCharacterHit(enemy) {
+      return this.character.isColliding(enemy) && !this.character.isAboveGround() && !enemy.isDead();
   }
 
   draw() {

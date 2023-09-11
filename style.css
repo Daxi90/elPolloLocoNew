@@ -3,10 +3,32 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-image: url(./img/5_background/elPolloLocoBG.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    overflow: hidden;
 }
 
 canvas{
     background-color: black;
+    display: block;
+}
+
+@media only screen and (max-width: 720px){
+    canvas{
+        width: 100%;
+    }
+}
+
+@media only screen and (max-height: 480px){
+    canvas{
+        height: 100vh;
+    }
+    h1{
+        display: none;
+    }
 }
 
 .d-none{
@@ -26,6 +48,11 @@ canvas{
 
 #endScreen{
     background-image: url(./img/5_background/first_half_background.png);
+}
+
+#endScreen img{
+    width: 100%;
+    height: 100vh;
 }
 
 #startScreen button, #endScreen button{
