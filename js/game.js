@@ -7,7 +7,9 @@ function init(){
     document.getElementById('startScreen').classList.add('d-none');
     document.getElementById('endScreen').classList.add('d-none');
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);    
+    initLevel();
+    world = new World(canvas, keyboard);  
+  
 }
 
 function hideStartScreen(){
