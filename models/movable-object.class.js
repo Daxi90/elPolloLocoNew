@@ -8,12 +8,23 @@ class MovableObject extends DrawableObject {
 
   applyGravity() {
     setInterval(() => {
-      if (this.isAboveGround() || this.speedY > 0) {
-        this.y -= this.speedY;
-        this.speedY -= this.acceleration;
-      }
+        if (this.isAboveGround() || this.speedY > 0) {
+            this.y -= this.speedY;
+            this.speedY -= this.acceleration;
+        } else {
+            // Wenn er den Boden erreicht, setzen Sie die y-Position zurück
+            // auf den Standardwert und die Geschwindigkeit in y-Richtung auf 0.
+            this.y = 180; // Nehmen Sie an, dass 180 die Grundposition ist
+            this.speedY = 0;
+        }
     }, 1000 / 25);
+}
+
+
+  isMovingDown() {
+    return this.speedY < 0;
   }
+
 
   isAboveGround() {
     if(this instanceof ThrowableObject){ // Throwable object should always fall

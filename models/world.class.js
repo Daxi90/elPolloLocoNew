@@ -65,16 +65,20 @@ clearAllIntervals() {
   }
 
   checkCollisions(){
-      //Check collision
-      this.level.enemies.forEach((enemy) => {
-        if (this.canCharacterHit(enemy)) {
-          /* console.log("Collision with Character", enemy); */
-          this.character.hit();
-          this.healthBar.setPercentage(this.character.energy);
-          console.log("Collision", this.character.energy)
+    //Check collision
+    this.level.enemies.forEach((enemy) => {
+        if (this.character.isColliding(enemy)) {
+            if (this.character.isMovingDown() && !enemy.isDead()) {
+                enemy.hit();  // Schaden zufügen, wenn der Charakter auf den Gegner springt
+                this.character.jump(); // Charakter springt leicht nach dem Treffen des Gegners
+            } else if (this.canCharacterHit(enemy)) {
+                this.character.hit(); // Charakter nimmt Schaden, wenn er den Gegner anders berührt
+                this.healthBar.setPercentage(this.character.energy);
+            }
         }
-      });
-  }
+    });
+}
+
 
 
   canCharacterHit(enemy) {
