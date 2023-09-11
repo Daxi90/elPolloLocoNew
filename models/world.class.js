@@ -102,6 +102,7 @@ clearAllIntervals() {
    
     this.addToMap(this.character);
     this.addObjectstoMap(this.level.enemies);
+    this.addObjectstoMap(this.level.coins);
     this.addObjectstoMap(this.throwableObjects);
     
     
@@ -121,7 +122,7 @@ clearAllIntervals() {
     }
 
     mo.draw(this.ctx);
-    mo.drawFrame(this.ctx);
+    mo.drawFrame(this.ctx); // UNCOMMENT TO DRAW FRAMES AROUND ENEMIES AND CHARACTER
 
     if (mo.otherDirection) {
       this.flipImageBack(mo);
