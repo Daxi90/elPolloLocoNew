@@ -62,7 +62,7 @@ class Endboss extends MovableObject {
 
       if(world.character.x > 1715){
         this.moveLeft();
-        this.playAnimation(this.IMAGES_ALERT);
+        //SOMETHING TO FIX
       }
 
       if (this.isHurt()) {
