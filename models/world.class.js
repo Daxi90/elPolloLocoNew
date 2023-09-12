@@ -11,6 +11,7 @@ class World {
   bottleBar = new BottleBar();
   throwableObjects = [];
   lastThrown = 0;
+  coinsCollected = 0;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -20,8 +21,6 @@ class World {
     this.setWorld();
     this.run();
   }
-
-  
 
   setWorld() {
     this.character.world = this;
@@ -33,56 +32,79 @@ class World {
       this.checkThrowObjects();
       this.checkCharacterDead();
     }, 50);
-
   }
 
-  checkCharacterDead(){
-    if(this.character.energy == 0){
+  checkCharacterDead() {
+    if (this.character.energy == 0) {
       this.showEndScreen();
       this.clearAllIntervals();
       this.character.walking_sound.pause();
     }
   }
 
-  showEndScreen(){
-    document.getElementById('endScreen').classList.remove('d-none');
+  showEndScreen() {
+    document.getElementById("endScreen").classList.remove("d-none");
   }
 
   /* Alternative (quick and dirty), um alle Intervalle zu beenden. */
-clearAllIntervals() {
-  for (let i = 1; i < 9999; i++) window.clearInterval(i);
-}
+  clearAllIntervals() {
+    for (let i = 1; i < 9999; i++) window.clearInterval(i);
+  }
 
-  checkThrowObjects(){
+  checkThrowObjects() {
     const currentTime = Date.now();
     const oneSecond = 1000;
 
-    if(this.keyboard.D && currentTime - this.lastThrown > oneSecond){
-      let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+    if (this.keyboard.D && currentTime - this.lastThrown > oneSecond) {
+      let bottle = new ThrowableObject(
+        this.character.x + 100,
+        this.character.y + 100
+      );
       this.throwableObjects.push(bottle);
       this.lastThrown = currentTime; // Aktualisiere den Zeitstempel
     }
   }
 
-  checkCollisions(){
+  checkCollisions() {
     //Check collision
+    this.checkCollisionsWithEnemy();
+    this.checkCollisionsWithCoin();
+  }
+
+  checkCollisionsWithEnemy() {
     this.level.enemies.forEach((enemy) => {
-        if (this.character.isColliding(enemy)) {
-            if (this.character.isMovingDown() && !enemy.isDead()) {
-                enemy.hit();  // Schaden zufügen, wenn der Charakter auf den Gegner springt
-                this.character.jump(); // Charakter springt leicht nach dem Treffen des Gegners
-            } else if (this.canCharacterHit(enemy)) {
-                this.character.hit(); // Charakter nimmt Schaden, wenn er den Gegner anders berührt
-                this.healthBar.setPercentage(this.character.energy);
-            }
+      if (this.character.isColliding(enemy)) {
+        if (this.character.isMovingDown() && !enemy.isDead()) {
+          enemy.hit(); // Schaden zufügen, wenn der Charakter auf den Gegner springt
+          this.character.jump(); // Charakter springt leicht nach dem Treffen des Gegners
+        } else if (this.canCharacterHit(enemy)) {
+          this.character.hit(); // Charakter nimmt Schaden, wenn er den Gegner anders berührt
+          this.healthBar.setPercentage(this.character.energy);
         }
+      }
     });
-}
+  }
 
-
+  checkCollisionsWithCoin() {
+    this.level.coins.forEach((coin, index) => {
+      if (this.character.isColliding(coin)) {
+        console.log('Coin collected!', coin);
+        // Entferne den Coin aus dem Array
+        this.level.coins.splice(index, 1);
+        // Du kannst hier auch den coinsCollected Zähler erhöhen
+        this.coinsCollected += 1;
+        console.log(this.level.coins);
+      }
+    });
+  }
+  
 
   canCharacterHit(enemy) {
-      return this.character.isColliding(enemy) && !this.character.isAboveGround() && !enemy.isDead();
+    return (
+      this.character.isColliding(enemy) &&
+      !this.character.isAboveGround() &&
+      !enemy.isDead()
+    );
   }
 
   draw() {
@@ -99,14 +121,10 @@ clearAllIntervals() {
     this.addToMap(this.bottleBar);
     this.ctx.translate(this.camera_x, 0); // FORWARD
 
-   
     this.addToMap(this.character);
     this.addObjectstoMap(this.level.enemies);
     this.addObjectstoMap(this.level.coins);
     this.addObjectstoMap(this.throwableObjects);
-    
-    
-
 
     this.ctx.translate(-this.camera_x, 0);
 
