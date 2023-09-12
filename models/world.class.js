@@ -12,7 +12,7 @@ class World {
   throwableObjects = [];
   lastThrown = 0;
   coinsCollected = 0;
-  bottlesCollected = 0;
+  bottlesCollected = 10;
   totalCoins;
   totalBottles;
 
@@ -77,6 +77,7 @@ class World {
     this.checkCollisionsWithEnemy();
     this.checkCollisionsWithCoin();
     this.checkCollisionsWithBottle();
+    this.checkCollisionsWithThrowAbleObject();
   }
 
   checkCollisionsWithEnemy() {
@@ -117,6 +118,19 @@ class World {
       }
     });
   }
+
+  checkCollisionsWithThrowAbleObject(){
+    this.level.enemies.forEach((enemy) => {
+        this.throwableObjects.forEach((throwableObject) => {
+            if(throwableObject.isColliding(enemy)){
+                if(!enemy.isDead()){
+                    enemy.hit();
+                }
+            }
+        });  
+    });    
+}
+
   
 
   canCharacterHit(enemy) {
