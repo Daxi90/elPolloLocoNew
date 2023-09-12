@@ -60,13 +60,15 @@ class World {
     const currentTime = Date.now();
     const oneSecond = 1000;
 
-    if (this.keyboard.D && currentTime - this.lastThrown > oneSecond) {
+    if (this.keyboard.D && currentTime - this.lastThrown > oneSecond && this.bottlesCollected > 0) {
       let bottle = new ThrowableObject(
         this.character.x + 100,
         this.character.y + 100
       );
       this.throwableObjects.push(bottle);
       this.lastThrown = currentTime; // Aktualisiere den Zeitstempel
+      this.bottlesCollected -= 1;
+      this.bottleBar.setPercentage((this.bottlesCollected / this.totalBottles) * 100);
     }
   }
 
