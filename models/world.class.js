@@ -35,15 +35,26 @@ class World {
     setInterval(() => {
       this.checkCollisions();
       this.checkThrowObjects();
-      this.checkCharacterDead();
+      this.checkCharacterOrBossDead();
     }, 50);
   }
 
-  checkCharacterDead() {
+  checkCharacterOrBossDead() {
     if (this.character.energy == 0) {
       this.showEndScreen();
       this.clearAllIntervals();
       this.character.walking_sound.pause();
+    } else {
+      this.level.enemies.forEach((enemy) => {
+        if (enemy instanceof Endboss && enemy.energy == 0) {
+          this.character.walking_sound.pause();
+          setTimeout(() => {
+            this.clearAllIntervals();
+            this.showEndScreen();
+          }, 3000); // Warte 3 Sekunden
+          return;
+        }
+      });
     }
   }
 
@@ -60,7 +71,11 @@ class World {
     const currentTime = Date.now();
     const oneSecond = 1000;
 
-    if (this.keyboard.D && currentTime - this.lastThrown > oneSecond && this.bottlesCollected > 0) {
+    if (
+      this.keyboard.D &&
+      currentTime - this.lastThrown > oneSecond &&
+      this.bottlesCollected > 0
+    ) {
       let bottle = new ThrowableObject(
         this.character.x + 100,
         this.character.y + 100
@@ -68,7 +83,9 @@ class World {
       this.throwableObjects.push(bottle);
       this.lastThrown = currentTime; // Aktualisiere den Zeitstempel
       this.bottlesCollected -= 1;
-      this.bottleBar.setPercentage((this.bottlesCollected / this.totalBottles) * 100);
+      this.bottleBar.setPercentage(
+        (this.bottlesCollected / this.totalBottles) * 100
+      );
     }
   }
 
@@ -101,11 +118,12 @@ class World {
         this.level.coins.splice(index, 1);
         // Du kannst hier auch den coinsCollected Zähler erhöhen
         this.coinsCollected += 1;
-        this.coinBar.setPercentage((this.coinsCollected / this.totalCoins) * 100);
+        this.coinBar.setPercentage(
+          (this.coinsCollected / this.totalCoins) * 100
+        );
       }
     });
   }
-
 
   checkCollisionsWithBottle() {
     this.level.bottles.forEach((bottle, index) => {
@@ -114,24 +132,27 @@ class World {
         this.level.bottles.splice(index, 1);
         // Du kannst hier auch den coinsCollected Zähler erhöhen
         this.bottlesCollected += 1;
-        this.bottleBar.setPercentage((this.bottlesCollected / this.totalBottles) * 100);
+        this.bottleBar.setPercentage(
+          (this.bottlesCollected / this.totalBottles) * 100
+        );
       }
     });
   }
 
-  checkCollisionsWithThrowAbleObject(){
+  checkCollisionsWithThrowAbleObject() {
     this.level.enemies.forEach((enemy) => {
         this.throwableObjects.forEach((throwableObject) => {
-            if(throwableObject.isColliding(enemy)){
-                if(!enemy.isDead()){
+            if (throwableObject.isColliding(enemy) && !throwableObject.isHit) {
+                if (!enemy.isDead()) {
                     enemy.hit();
+                    throwableObject.isHit = true; // Setzen des Flaschenzustands auf getroffen
+                    throwableObject.animateSplash(); // Start der Splash-Animation
                 }
             }
-        });  
-    });    
+        });
+    });
 }
 
-  
 
   canCharacterHit(enemy) {
     return (
