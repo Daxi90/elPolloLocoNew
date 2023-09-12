@@ -88,12 +88,11 @@ class World {
   checkCollisionsWithCoin() {
     this.level.coins.forEach((coin, index) => {
       if (this.character.isColliding(coin)) {
-        console.log('Coin collected!', coin);
         // Entferne den Coin aus dem Array
         this.level.coins.splice(index, 1);
         // Du kannst hier auch den coinsCollected Zähler erhöhen
         this.coinsCollected += 1;
-        console.log(this.level.coins);
+        this.coinBar.setPercentage(this.coinsCollected * 10);
       }
     });
   }
