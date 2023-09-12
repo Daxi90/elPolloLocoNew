@@ -123,6 +123,7 @@ class World {
     this.addToMap(this.character);
     this.addObjectstoMap(this.level.enemies);
     this.addObjectstoMap(this.level.coins);
+    this.addObjectstoMap(this.level.bottles);
     this.addObjectstoMap(this.throwableObjects);
 
     this.ctx.translate(-this.camera_x, 0);
