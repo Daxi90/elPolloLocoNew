@@ -12,7 +12,7 @@ class World {
   throwableObjects = [];
   lastThrown = 0;
   coinsCollected = 0;
-  bottlesCollected = 10;
+  bottlesCollected = 0;
   totalCoins;
   totalBottles;
 
