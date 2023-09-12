@@ -12,6 +12,9 @@ class World {
   throwableObjects = [];
   lastThrown = 0;
   coinsCollected = 0;
+  bottlesCollected = 0;
+  totalCoins;
+  totalBottles;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -19,6 +22,8 @@ class World {
     this.keyboard = keyboard;
     this.draw();
     this.setWorld();
+    this.totalCoins = this.level.coins.length;
+    this.totalBottles = this.level.bottles.length;
     this.run();
   }
 
@@ -69,6 +74,7 @@ class World {
     //Check collision
     this.checkCollisionsWithEnemy();
     this.checkCollisionsWithCoin();
+    this.checkCollisionsWithBottle();
   }
 
   checkCollisionsWithEnemy() {
@@ -92,7 +98,20 @@ class World {
         this.level.coins.splice(index, 1);
         // Du kannst hier auch den coinsCollected Zähler erhöhen
         this.coinsCollected += 1;
-        this.coinBar.setPercentage(this.coinsCollected * 10);
+        this.coinBar.setPercentage((this.coinsCollected / this.totalCoins) * 100);
+      }
+    });
+  }
+
+
+  checkCollisionsWithBottle() {
+    this.level.bottles.forEach((bottle, index) => {
+      if (this.character.isColliding(bottle)) {
+        // Entferne den Coin aus dem Array
+        this.level.bottles.splice(index, 1);
+        // Du kannst hier auch den coinsCollected Zähler erhöhen
+        this.bottlesCollected += 1;
+        this.bottleBar.setPercentage((this.bottlesCollected / this.totalBottles) * 100);
       }
     });
   }
