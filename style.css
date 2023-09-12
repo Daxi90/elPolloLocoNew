@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'Zabras';
+    src: url('fonts/Zabars.ttf');
+}
+
+
 body{
     display: flex;
     flex-direction: column;
@@ -7,8 +13,14 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: 'Zabras', Arial, Helvetica, sans-serif;
     overflow: hidden;
+}
+
+h1{
+    font-size: 64px;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
 }
 
 canvas{
