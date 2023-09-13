@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" translate="no">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="./img/2_character_pepe/2_walk/W-21.png" type="image/x-icon">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="shortcut icon"
+      href="./img/2_character_pepe/2_walk/W-21.png"
+      type="image/x-icon"
+    />
     <title>El Pollo Loco</title>
     <script src="./models/drawable-object.class.js"></script>
     <script src="./models/movable-object.class.js"></script>
@@ -25,40 +29,39 @@
     <script src="./models/endboss.class.js"></script>
     <script src="./levels/level1.js"></script>
     <script src="./js/game.js"></script>
-
-</head>
-<body>
+  </head>
+  <body>
     <h1>El pollo loco</h1>
-    <canvas id="canvas" width="720" height="480">
-
-    </canvas>
-    <div id="controls">
+    <div class="canvas-container">
+      <canvas id="canvas" width="720" height="480">
+      </canvas>
+      <div id="controls">
         <div id="move">
-            <div class="arrow" id="leftArrow">
-                <img src="img/controls/angel-left-thin.svg" alt="">
-            </div>
-            <div class="arrow" id="rightArrow">
-                <img src="img/controls/angel-right-thin.svg" alt="">
-            </div>
+          <div class="arrow" id="leftArrow">
+            <img src="img/controls/angel-left-thin.svg" alt="" />
+          </div>
+          <div class="arrow" id="rightArrow">
+            <img src="img/controls/angel-right-thin.svg" alt="" />
+          </div>
         </div>
         <div id="actions">
-            <div class="arrow" id="jump">
-                <img src="img/controls/angel-up-thin.svg" alt="">
-            </div>
-            <div class="arrow" id="throw">
-                <img src="img/controls/throw.svg" alt="">
-            </div>
+          <div class="arrow" id="jump">
+            <img src="img/controls/angel-up-thin.svg" alt="" />
+          </div>
+          <div class="arrow" id="throw">
+            <img src="img/controls/throw.svg" alt="" />
+          </div>
         </div>
+      </div>
     </div>
 
     <div id="startScreen">
-        <button onclick="init();">Start Game</button>
+      <button onclick="init();">Start Game</button>
     </div>
 
     <div class="d-none" id="endScreen">
-        <img src="./img/9_intro_outro_screens/game_over/game over!.png" alt="">
-        <button onclick="init();">Restart Game</button>
+      <img src="./img/9_intro_outro_screens/game_over/game over!.png" alt="" />
+      <button onclick="init();">Restart Game</button>
     </div>
-    
-</body>
+  </body>
 </html>

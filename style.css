@@ -15,6 +15,8 @@ body{
     height: 100vh;
     font-family: 'Zabras', Arial, Helvetica, sans-serif;
     overflow: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 h1{
@@ -26,11 +28,20 @@ h1{
 canvas{
     background-color: black;
     display: block;
+    position: relative;
+}
+
+.canvas-container {
+    position: relative;
+    display: inline-block; /* You can also use block if you want the container to take full width */
 }
 
 #controls{
-    padding: 4px;
-    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    padding: 16px;
+    padding-bottom: 4px;
+    width: calc(100% - 32px);
     max-width: 720px;
     display: none;
     justify-content: space-between;
@@ -43,8 +54,8 @@ canvas{
 
 .arrow{
     background-color: #ff9600;
-    height: 55px;
-    width: 55px;
+    height: 40px;
+    width: 40px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -63,7 +74,8 @@ canvas{
 
 @media only screen and (max-height: 480px){
     canvas{
-        height: 70vh;
+        height: 100vh;
+        width: 100vw;
     }
     h1{
         display: none;
