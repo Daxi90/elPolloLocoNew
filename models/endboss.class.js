@@ -3,6 +3,7 @@ class Endboss extends MovableObject {
   height = 400;
   y = 50;
   speed = 15;
+  firstContact = true;
 
   IMAGES_WALKING = [
     "img/4_enemie_boss_chicken/1_walk/G1.png",
@@ -61,10 +62,13 @@ class Endboss extends MovableObject {
     setInterval(() => {
 
       if(world.character.x > 1715){
-        this.moveLeft();
+        this.firstContact = false;
         //SOMETHING TO FIX
       }
 
+      if(!this.firstContact){
+        this.moveLeft();
+      }
       if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
       } else if (this.isDead()) {
