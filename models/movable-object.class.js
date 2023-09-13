@@ -5,6 +5,7 @@ class MovableObject extends DrawableObject {
   acceleration = 2.5;
   energy = 10;
   lastHit = 0;
+  lastMoveTimestamp = Date.now();
  
 
 
@@ -40,11 +41,13 @@ class MovableObject extends DrawableObject {
 
   moveRight() {
     this.x += this.speed;
+    this.lastMoveTimestamp = Date.now();
     this.walking_sound.play();
   }
 
   moveLeft() {
     this.x -= this.speed;
+    this.lastMoveTimestamp = Date.now();
   }
 
   playAnimation(images) {
@@ -57,6 +60,7 @@ class MovableObject extends DrawableObject {
 
   jump() {
     return (this.speedY = 30);
+    this.lastMoveTimestamp = Date.now();
   }
 
   // Bessere Formel zur Kollisionsberechnung (Genauer)
