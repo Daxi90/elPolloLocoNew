@@ -1,4 +1,7 @@
 class Character extends MovableObject {
+
+  energy = 50;
+
   IMAGES_WALKING = [
     "img/2_character_pepe/2_walk/W-21.png",
     "img/2_character_pepe/2_walk/W-22.png",
@@ -50,6 +53,13 @@ class Character extends MovableObject {
     this.animate();
   }
 
+
+  isCollidingWithBuffer(object, buffer = 50) {
+    return this.x + buffer < object.x + object.width - buffer &&
+           this.x + this.width - buffer > object.x + buffer &&
+           this.y + buffer < object.y + object.height - buffer &&
+           this.y + this.height - buffer > object.y + buffer;
+  }
 
   animate() {
     setInterval(() => {

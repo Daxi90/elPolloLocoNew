@@ -113,31 +113,28 @@ class World {
 
   checkCollisionsWithCoin() {
     this.level.coins.forEach((coin, index) => {
-      if (this.character.isColliding(coin)) {
-        // Entferne den Coin aus dem Array
-        this.level.coins.splice(index, 1);
-        // Du kannst hier auch den coinsCollected Zähler erhöhen
-        this.coinsCollected += 1;
-        this.coinBar.setPercentage(
-          (this.coinsCollected / this.totalCoins) * 100
-        );
-      }
+        if (this.character.isCollidingWithBuffer(coin)) {
+            this.level.coins.splice(index, 1);
+            this.coinsCollected += 1;
+            this.coinBar.setPercentage(
+                (this.coinsCollected / this.totalCoins) * 100
+            );
+        }
     });
-  }
+}
 
-  checkCollisionsWithBottle() {
+checkCollisionsWithBottle() {
     this.level.bottles.forEach((bottle, index) => {
-      if (this.character.isColliding(bottle)) {
-        // Entferne den Coin aus dem Array
-        this.level.bottles.splice(index, 1);
-        // Du kannst hier auch den coinsCollected Zähler erhöhen
-        this.bottlesCollected += 1;
-        this.bottleBar.setPercentage(
-          (this.bottlesCollected / this.totalBottles) * 100
-        );
-      }
+        if (this.character.isCollidingWithBuffer(bottle)) {
+            this.level.bottles.splice(index, 1);
+            this.bottlesCollected += 1;
+            this.bottleBar.setPercentage(
+                (this.bottlesCollected / this.totalBottles) * 100
+            );
+        }
     });
-  }
+}
+
 
   checkCollisionsWithThrowAbleObject() {
     this.level.enemies.forEach((enemy) => {
@@ -153,6 +150,12 @@ class World {
     });
 }
 
+isCollidingWithBuffer(object, buffer = 5) {
+  return this.x + buffer < object.x + object.width - buffer &&
+         this.x + this.width - buffer > object.x + buffer &&
+         this.y + buffer < object.y + object.height - buffer &&
+         this.y + this.height - buffer > object.y + buffer;
+}
 
   canCharacterHit(enemy) {
     return (
@@ -196,7 +199,7 @@ class World {
     }
 
     mo.draw(this.ctx);
-    //mo.drawFrame(this.ctx); // UNCOMMENT TO DRAW FRAMES AROUND ENEMIES AND CHARACTER
+    mo.drawFrame(this.ctx); // UNCOMMENT TO DRAW FRAMES AROUND ENEMIES AND CHARACTER
 
     if (mo.otherDirection) {
       this.flipImageBack(mo);
