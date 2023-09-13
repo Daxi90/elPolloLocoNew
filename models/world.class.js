@@ -41,7 +41,7 @@ class World {
 
   checkCharacterOrBossDead() {
     if (this.character.energy == 0) {
-      this.showEndScreen();
+      this.showGameOverScreen();
       this.clearAllIntervals();
       this.character.walking_sound.pause();
     } else {
@@ -50,7 +50,7 @@ class World {
           this.character.walking_sound.pause();
           setTimeout(() => {
             this.clearAllIntervals();
-            this.showEndScreen();
+            //this.showEndScreen();
           }, 3000); // Warte 3 Sekunden
           return;
         }
@@ -58,7 +58,7 @@ class World {
     }
   }
 
-  showEndScreen() {
+  showGameOverScreen() {
     document.getElementById("endScreen").classList.remove("d-none");
   }
 
@@ -196,7 +196,7 @@ class World {
     }
 
     mo.draw(this.ctx);
-    mo.drawFrame(this.ctx); // UNCOMMENT TO DRAW FRAMES AROUND ENEMIES AND CHARACTER
+    //mo.drawFrame(this.ctx); // UNCOMMENT TO DRAW FRAMES AROUND ENEMIES AND CHARACTER
 
     if (mo.otherDirection) {
       this.flipImageBack(mo);

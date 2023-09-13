@@ -13,6 +13,54 @@ function init(){
 }
 
 
+window.addEventListener('DOMContentLoaded', () =>{
+    document.getElementById('leftArrow').addEventListener('touchstart', (e) =>{
+        e.preventDefault();
+        keyboard.LEFT = true;
+    })
+    
+    document.getElementById('rightArrow').addEventListener('touchstart', (e) =>{
+        e.preventDefault();
+        keyboard.RIGHT = true;
+    })
+    
+    document.getElementById('jump').addEventListener('touchstart', (e) =>{
+        e.preventDefault();
+        keyboard.SPACE = true;
+    })
+    
+    document.getElementById('throw').addEventListener('touchstart', (e) =>{
+        e.preventDefault();
+        keyboard.D = true;
+    })
+
+
+
+    document.getElementById('leftArrow').addEventListener('touchend', (e) =>{
+        e.preventDefault();
+        keyboard.LEFT = false;
+    })
+    
+    document.getElementById('rightArrow').addEventListener('touchend', (e) =>{
+        e.preventDefault();
+        keyboard.RIGHT = false;
+    })
+    
+    document.getElementById('jump').addEventListener('touchend', (e) =>{
+        e.preventDefault();
+        keyboard.SPACE = false;
+    })
+    
+    document.getElementById('throw').addEventListener('touchend', (e) =>{
+        e.preventDefault();
+        keyboard.D = false;
+    })
+
+})
+
+
+
+
 
 window.addEventListener('keydown', (e) =>{
     if(e.keyCode == 32){

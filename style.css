@@ -28,6 +28,29 @@ canvas{
     display: block;
 }
 
+#controls{
+    padding: 4px;
+    width: 100%;
+    max-width: 720px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#move, #actions{
+    display: flex;
+    gap: 16px;
+}
+
+.arrow{
+    background-color: #ff9600;
+    height: 55px;
+    width: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 @media only screen and (max-width: 720px){
     canvas{
         width: 100%;
