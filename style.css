@@ -32,7 +32,7 @@ canvas{
     padding: 4px;
     width: 100%;
     max-width: 720px;
-    display: flex;
+    display: none;
     justify-content: space-between;
 }
 
@@ -55,14 +55,21 @@ canvas{
     canvas{
         width: 100%;
     }
+
+    #controls{
+        display: flex;
+    }
 }
 
 @media only screen and (max-height: 480px){
     canvas{
-        height: 100vh;
+        height: 70vh;
     }
     h1{
         display: none;
+    }
+    #controls{
+        display: flex;
     }
 }
 
