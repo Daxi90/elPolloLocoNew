@@ -3,7 +3,7 @@ class Endboss extends MovableObject {
   height = 400;
   y = 50;
   speed = 15;
-  firstContact = true;
+  hadFirstContact = false;
 
   IMAGES_WALKING = [
     "img/4_enemie_boss_chicken/1_walk/G1.png",
@@ -58,25 +58,35 @@ class Endboss extends MovableObject {
   }
 
   animate() {
-
-    setInterval(() => {
-
-      if(world.character.x > 1715){
-        this.firstContact = false;
-        //SOMETHING TO FIX
-      }
-
-      if(!this.firstContact){
+    let i = 0;
+  
+    const interval = setInterval(() => {
+  
+      if (this.hadFirstContact) {
         this.moveLeft();
       }
+  
       if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
       } else if (this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
       } else {
-        //Walk animation
-        this.playAnimation(this.IMAGES_WALKING);
+        if (i < 10) {
+          // Walk animation
+          this.playAnimation(this.IMAGES_WALKING);
+        } else {
+          this.playAnimation(this.IMAGES_ALERT);
+        }
       }
+      i++;
+  
+      if (world.character.x > 1600 && !this.hadFirstContact) {
+
+        i = 0;
+        this.hadFirstContact = true; // Wir setzen dies auf 'true' und nicht auf 'false'
+      }
+  
     }, 200);
   }
+  
 }
