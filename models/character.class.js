@@ -69,7 +69,8 @@ class Character extends MovableObject {
   world;
   speed = 5;
   hasJumped = false;
-  walking_sound = new Audio("audio/walking.mp3");
+  walking_sound = new Audio('audio/walking.mp3');
+  jump_sound = new Audio('audio/jump.mp3');
 
 
   constructor() {
@@ -107,6 +108,7 @@ class Character extends MovableObject {
 
       if(this.world.keyboard.SPACE && !this.isAboveGround()){
         this.jump();
+        this.jump_sound.play();
       }
 
       this.world.camera_x = -this.x + 100;

@@ -16,6 +16,9 @@ class World {
   totalCoins;
   totalBottles;
 
+  coin_sound = new Audio('audio/coin.mp3');
+  splash_sound = new Audio('audio/splash.mp3');
+
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
@@ -120,6 +123,7 @@ class World {
             this.coinBar.setPercentage(
                 (this.coinsCollected / this.totalCoins) * 100
             );
+            this.coin_sound.play();
         }
     });
 }
@@ -132,6 +136,7 @@ checkCollisionsWithBottle() {
             this.bottleBar.setPercentage(
                 (this.bottlesCollected / this.totalBottles) * 100
             );
+            this.splash_sound.play();
         }
     });
 }
@@ -145,6 +150,7 @@ checkCollisionsWithBottle() {
                     enemy.hit();
                     throwableObject.isHit = true; // Setzen des Flaschenzustands auf getroffen
                     throwableObject.animateSplash(); // Start der Splash-Animation
+                    this.splash_sound.play();
                 }
             }
         });
