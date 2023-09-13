@@ -33,8 +33,7 @@
   <body>
     <h1>El pollo loco</h1>
     <div class="canvas-container">
-      <canvas id="canvas" width="720" height="480">
-      </canvas>
+      <canvas id="canvas" width="720" height="480"> </canvas>
       <div id="controls">
         <div id="move">
           <div class="arrow" id="leftArrow">
@@ -57,6 +56,29 @@
 
     <div id="startScreen">
       <button onclick="init();">Start Game</button>
+      <div id="instructions">
+        <h2>Ziel des Spiels:</h2>
+        <p>
+          Hilf Pepe, Hühner zu besiegen und Münzen sowie Flaschen zu sammeln.
+          Nutze Flaschen, um Gegner, besonders den Endgegner, auszuschalten.
+        </p>
+
+        <h2>Steuerung:</h2>
+        <ul>
+          <li><strong>Pfeiltaste links/rechts</strong>: Bewegt Pepe</li>
+          <li><strong>Leertaste</strong>: Springen</li>
+          <li><strong>D-Taste</strong>: Flasche werfen</li>
+        </ul>
+
+        <h2>Spielhinweise:</h2>
+        <ol>
+          <li>Springe auf Hühner, um sie zu besiegen.</li>
+          <li>Sammele Münzen und Flaschen.</li>
+          <li>Benutze Flaschen gegen den Endgegner.</li>
+        </ol>
+
+        <p>Viel Erfolg und Spaß mit Pepe!</p>
+      </div>
     </div>
 
     <div class="d-none" id="endScreen">

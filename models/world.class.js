@@ -50,8 +50,9 @@ class World {
           this.character.walking_sound.pause();
           setTimeout(() => {
             this.clearAllIntervals();
-            //this.showEndScreen();
+            document.getElementById('startScreen').classList.remove('d-none');
           }, 3000); // Warte 3 Sekunden
+          
           return;
         }
       });
@@ -199,7 +200,7 @@ isCollidingWithBuffer(object, buffer = 5) {
     }
 
     mo.draw(this.ctx);
-    mo.drawFrame(this.ctx); // UNCOMMENT TO DRAW FRAMES AROUND ENEMIES AND CHARACTER
+    //mo.drawFrame(this.ctx); // UNCOMMENT TO DRAW FRAMES AROUND ENEMIES AND CHARACTER
 
     if (mo.otherDirection) {
       this.flipImageBack(mo);
