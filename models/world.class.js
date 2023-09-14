@@ -1,3 +1,6 @@
+/**
+ * Represents the game world.
+ */
 class World {
   character = new Character();
   level = level1;
@@ -16,9 +19,14 @@ class World {
   totalCoins;
   totalBottles;
 
-  coin_sound = new Audio('audio/coin.mp3');
-  splash_sound = new Audio('audio/splash.mp3');
+  coin_sound = new Audio("audio/coin.mp3");
+  splash_sound = new Audio("audio/splash.mp3");
 
+  /**
+   * Create a World.
+   * @param {HTMLCanvasElement} canvas - The canvas on which the world is drawn.
+   * @param {Keyboard} keyboard - The keyboard object to capture player input.
+   */
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
@@ -30,10 +38,16 @@ class World {
     this.run();
   }
 
+  /**
+   * Sets the world property for the character.
+   */
   setWorld() {
     this.character.world = this;
   }
 
+  /**
+   * Starts periodic checks in the game world for collisions and object throws.
+   */
   run() {
     setInterval(() => {
       this.checkCollisions();
@@ -42,6 +56,9 @@ class World {
     }, 50);
   }
 
+  /**
+   * Checks if character or boss is dead and takes appropriate actions.
+   */
   checkCharacterOrBossDead() {
     if (this.character.energy == 0) {
       this.showGameOverScreen();
@@ -53,24 +70,32 @@ class World {
           this.character.walking_sound.pause();
           setTimeout(() => {
             this.clearAllIntervals();
-            document.getElementById('startScreen').classList.remove('d-none');
+            document.getElementById("startScreen").classList.remove("d-none");
           }, 3000); // Warte 3 Sekunden
-          
+
           return;
         }
       });
     }
   }
 
+  /**
+   * Display the game over screen.
+   */
   showGameOverScreen() {
     document.getElementById("endScreen").classList.remove("d-none");
   }
 
-  /* Alternative (quick and dirty), um alle Intervalle zu beenden. */
+  /**
+   * Clears all active intervals.
+   */
   clearAllIntervals() {
     for (let i = 1; i < 9999; i++) window.clearInterval(i);
   }
 
+  /**
+   * Checks for throwable objects and handles their behavior.
+   */
   checkThrowObjects() {
     const currentTime = Date.now();
     const oneSecond = 1000;
@@ -93,6 +118,9 @@ class World {
     }
   }
 
+  /**
+   * Checks for collisions in the world.
+   */
   checkCollisions() {
     //Check collision
     this.checkCollisionsWithEnemy();
@@ -101,6 +129,9 @@ class World {
     this.checkCollisionsWithThrowAbleObject();
   }
 
+  /**
+   * Checks for collisions between the character and enemies.
+   */
   checkCollisionsWithEnemy() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
@@ -115,55 +146,76 @@ class World {
     });
   }
 
+  /**
+   * Checks for collisions between the character and coins.
+   */
   checkCollisionsWithCoin() {
     this.level.coins.forEach((coin, index) => {
-        if (this.character.isCollidingWithBuffer(coin)) {
-            this.level.coins.splice(index, 1);
-            this.coinsCollected += 1;
-            this.coinBar.setPercentage(
-                (this.coinsCollected / this.totalCoins) * 100
-            );
-            this.coin_sound.play();
-        }
+      if (this.character.isCollidingWithBuffer(coin)) {
+        this.level.coins.splice(index, 1);
+        this.coinsCollected += 1;
+        this.coinBar.setPercentage(
+          (this.coinsCollected / this.totalCoins) * 100
+        );
+        this.coin_sound.play();
+      }
     });
-}
+  }
 
-checkCollisionsWithBottle() {
+  /**
+   * Checks for collisions between the character and bottles.
+   */
+  checkCollisionsWithBottle() {
     this.level.bottles.forEach((bottle, index) => {
-        if (this.character.isCollidingWithBuffer(bottle)) {
-            this.level.bottles.splice(index, 1);
-            this.bottlesCollected += 1;
-            this.bottleBar.setPercentage(
-                (this.bottlesCollected / this.totalBottles) * 100
-            );
-            this.splash_sound.play();
-        }
+      if (this.character.isCollidingWithBuffer(bottle)) {
+        this.level.bottles.splice(index, 1);
+        this.bottlesCollected += 1;
+        this.bottleBar.setPercentage(
+          (this.bottlesCollected / this.totalBottles) * 100
+        );
+        this.splash_sound.play();
+      }
     });
-}
+  }
 
-
+  /**
+   * Checks for collisions of thrown objects with enemies.
+   */
   checkCollisionsWithThrowAbleObject() {
     this.level.enemies.forEach((enemy) => {
-        this.throwableObjects.forEach((throwableObject) => {
-            if (throwableObject.isColliding(enemy) && !throwableObject.isHit) {
-                if (!enemy.isDead()) {
-                    enemy.hit();
-                    throwableObject.isHit = true; // Setzen des Flaschenzustands auf getroffen
-                    throwableObject.animateSplash(); // Start der Splash-Animation
-                    this.splash_sound.play();
-                }
-            }
-        });
+      this.throwableObjects.forEach((throwableObject) => {
+        if (throwableObject.isColliding(enemy) && !throwableObject.isHit) {
+          if (!enemy.isDead()) {
+            enemy.hit();
+            throwableObject.isHit = true; // Setzen des Flaschenzustands auf getroffen
+            throwableObject.animateSplash(); // Start der Splash-Animation
+            this.splash_sound.play();
+          }
+        }
+      });
     });
-}
+  }
 
-isCollidingWithBuffer(object, buffer = 5) {
-  return this.x + buffer < object.x + object.width - buffer &&
-         this.x + this.width - buffer > object.x + buffer &&
-         this.y + buffer < object.y + object.height - buffer &&
-         this.y + this.height - buffer > object.y + buffer;
-}
+  /**
+   * Determines if the provided object is colliding with a given buffer.
+   * @param {Object} object - The object to check collisions for.
+   * @param {number} [buffer=5] - The buffer for collision checks.
+   * @returns {boolean} - Whether the object is colliding or not.
+   */
+  isCollidingWithBuffer(object, buffer = 5) {
+    return (
+      this.x + buffer < object.x + object.width - buffer &&
+      this.x + this.width - buffer > object.x + buffer &&
+      this.y + buffer < object.y + object.height - buffer &&
+      this.y + this.height - buffer > object.y + buffer
+    );
+  }
 
+  /**
+   * Determines if the character can hit the provided enemy.
+   * @param {Enemy} enemy - The enemy to check against.
+   * @returns {boolean} - Whether the character can hit the enemy or not.
+   */
   canCharacterHit(enemy) {
     return (
       this.character.isColliding(enemy) &&
@@ -172,6 +224,9 @@ isCollidingWithBuffer(object, buffer = 5) {
     );
   }
 
+  /**
+   * Draws the game world on the canvas.
+   */
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -200,6 +255,10 @@ isCollidingWithBuffer(object, buffer = 5) {
     });
   }
 
+  /**
+   * Adds a map object to the world and draws it on the canvas.
+   * @param {MapObject} mo - The map object to be added.
+   */
   addToMap(mo) {
     if (mo.otherDirection) {
       this.flipImage(mo);
@@ -213,12 +272,20 @@ isCollidingWithBuffer(object, buffer = 5) {
     }
   }
 
+  /**
+   * Adds an array of objects to the world.
+   * @param {MapObject[]} objects - The array of map objects.
+   */
   addObjectstoMap(objects) {
     objects.forEach((obj) => {
       this.addToMap(obj);
     });
   }
 
+  /**
+   * Flips an image in the game world.
+   * @param {MapObject} mo - The map object containing the image to be flipped.
+   */
   flipImage(mo) {
     this.ctx.save();
     this.ctx.translate(mo.width, 0);
@@ -226,6 +293,10 @@ isCollidingWithBuffer(object, buffer = 5) {
     mo.x = mo.x * -1;
   }
 
+  /**
+   * Flips back an image in the game world to its original state.
+   * @param {MapObject} mo - The map object containing the image to be flipped back.
+   */
   flipImageBack(mo) {
     mo.x = mo.x * -1;
     this.ctx.restore();

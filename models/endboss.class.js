@@ -1,8 +1,36 @@
+/**
+ * Represents the end boss of the game.
+ * @extends MovableObject
+ */
 class Endboss extends MovableObject {
+  /**
+   * Width of the end boss.
+   * @type {number}
+   */
   width = 250;
+
+  /**
+   * Height of the end boss.
+   * @type {number}
+   */
   height = 400;
+
+  /**
+   * Y-coordinate of the end boss.
+   * @type {number}
+   */
   y = 50;
+
+  /**
+   * Speed of the end boss.
+   * @type {number}
+   */
   speed = 15;
+
+  /**
+   * Whether the end boss had its first contact or not.
+   * @type {boolean}
+   */
   hadFirstContact = false;
 
   IMAGES_WALKING = [
@@ -46,6 +74,9 @@ class Endboss extends MovableObject {
     "img/4_enemie_boss_chicken/5_dead/G26.png",
   ];
 
+  /**
+   * Constructs the end boss, loads its images and sets its initial position.
+   */
   constructor() {
     super().loadImage(this.IMAGES_WALKING[0]);
     this.loadImages(this.IMAGES_WALKING);
@@ -57,15 +88,17 @@ class Endboss extends MovableObject {
     this.animate();
   }
 
+  /**
+   * Animates the end boss based on its state.
+   */
   animate() {
     let i = 0;
-  
+
     const interval = setInterval(() => {
-  
       if (this.hadFirstContact) {
         this.moveLeft();
       }
-  
+
       if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
       } else if (this.isDead()) {
@@ -79,14 +112,11 @@ class Endboss extends MovableObject {
         }
       }
       i++;
-  
-      if (world.character.x > 1600 && !this.hadFirstContact) {
 
+      if (world.character.x > 1600 && !this.hadFirstContact) {
         i = 0;
-        this.hadFirstContact = true; // Wir setzen dies auf 'true' und nicht auf 'false'
+        this.hadFirstContact = true; // Set to 'true' and not 'false'
       }
-  
     }, 200);
   }
-  
 }

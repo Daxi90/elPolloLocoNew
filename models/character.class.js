@@ -1,8 +1,13 @@
+/**
+ * Represents the main character of the game.
+ * Extends the MovableObject class.
+ */
 class Character extends MovableObject {
 
+   /** @property {number} energy - The energy of the character. */
   energy = 50;
 
-
+// Various arrays of image paths representing different character animations/states
   IMAGES_IDLE = [
     'img/2_character_pepe/1_idle/idle/I-1.png',
     'img/2_character_pepe/1_idle/idle/I-2.png',
@@ -66,15 +71,28 @@ class Character extends MovableObject {
     "img/2_character_pepe/5_dead/D-57.png"
   ]
 
+  /** @property {object} world - Represents the game world in which the character resides. */
   world;
+
+  /** @property {number} speed - The speed of the character movement. */
   speed = 5;
+
+  /** @property {boolean} hasJumped - A flag that determines if the character has jumped. */
   hasJumped = false;
+
+  /** @property {Audio} walking_sound - The sound played when the character is walking. */
   walking_sound = new Audio('audio/walking.mp3');
+
+  /** @property {Audio} jump_sound - The sound played when the character jumps. */
   jump_sound = new Audio('audio/jump.mp3');
 
-
+  /**
+   * Initializes a new instance of the Character class.
+   */
   constructor() {
     super().loadImage("img/2_character_pepe/2_walk/W-21.png");
+
+    // Loads various character images for different animations/states
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_JUMPING);
     this.loadImages(this.IMAGES_HURT);
@@ -85,7 +103,12 @@ class Character extends MovableObject {
     this.animate();
   }
 
-
+  /**
+   * Checks if the character is colliding with a given object within a buffer.
+   * @param {object} object - The object to check for collision.
+   * @param {number} [buffer=50] - The buffer distance for collision.
+   * @returns {boolean} - Returns true if the character is colliding, false otherwise.
+   */
   isCollidingWithBuffer(object, buffer = 50) {
     return this.x + buffer < object.x + object.width - buffer &&
            this.x + this.width - buffer > object.x + buffer &&
@@ -93,7 +116,11 @@ class Character extends MovableObject {
            this.y + this.height - buffer > object.y + buffer;
   }
 
+    /**
+   * Animates the character based on its actions and the environment.
+   */
   animate() {
+     // main game loop handling character movements and actions
     setInterval(() => {
       this.walking_sound.pause();
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -114,7 +141,7 @@ class Character extends MovableObject {
       this.world.camera_x = -this.x + 100;
     }, 1000 / 60);
 
-    // separates Intervall für die Idle-Animation, z.B. alle 300ms
+    // Idle animations interval
     setInterval(() => {
       if (Date.now() - this.lastMoveTimestamp >= 3000) {
         this.playAnimation(this.IMAGES_IDLE);
@@ -125,7 +152,9 @@ class Character extends MovableObject {
       }
     }, 700);
 
+    // Various animations based on character states
     setInterval(() => {
+      // logic for animations like jumping, hurt, dead, etc..
       if(this.isHurt()){
         this.playAnimation(this.IMAGES_HURT);
       }

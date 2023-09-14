@@ -1,55 +1,81 @@
+/**
+ * Represents a movable object in the game.
+ * @extends DrawableObject
+ */
 class MovableObject extends DrawableObject {
-  speed = 0.15;
-  otherDirection = false;
-  speedY = 0;
-  acceleration = 2.5;
-  energy = 10;
-  lastHit = 0;
-  lastMoveTimestamp = Date.now();
- 
+  /**
+   * @constructor
+   */
+  constructor() {
+    super();
+    this.speed = 0.15;
+    this.otherDirection = false;
+    this.speedY = 0;
+    this.acceleration = 2.5;
+    this.energy = 10;
+    this.lastHit = 0;
+    this.lastMoveTimestamp = Date.now();
+  }
 
-
-
+  /**
+   * Applies gravity to the movable object.
+   */
   applyGravity() {
     setInterval(() => {
-        if (this.isAboveGround() || this.speedY > 0) {
-            this.y -= this.speedY;
-            this.speedY -= this.acceleration;
-        } else {
-            // Wenn er den Boden erreicht, setzen Sie die y-Position zurück
-            // auf den Standardwert und die Geschwindigkeit in y-Richtung auf 0.
-            this.y = 180; // Nehmen Sie an, dass 180 die Grundposition ist
-            this.speedY = 0;
-        }
+      if (this.isAboveGround() || this.speedY > 0) {
+        this.y -= this.speedY;
+        this.speedY -= this.acceleration;
+      } else {
+        // Wenn er den Boden erreicht, setzen Sie die y-Position zurück
+        // auf den Standardwert und die Geschwindigkeit in y-Richtung auf 0.
+        this.y = 180; // Nehmen Sie an, dass 180 die Grundposition ist
+        this.speedY = 0;
+      }
     }, 1000 / 25);
-}
+  }
 
-
+  /**
+   * Checks if the object is moving downwards.
+   * @returns {boolean}
+   */
   isMovingDown() {
     return this.speedY < 0;
   }
 
-
+  /**
+   * Checks if the object is above the ground.
+   * @returns {boolean}
+   */
   isAboveGround() {
-    if(this instanceof ThrowableObject){ // Throwable object should always fall
+    if (this instanceof ThrowableObject) {
+      // Throwable object should always fall
       return true;
-    }else{
+    } else {
       return this.y < 180;
     }
-    
   }
 
+  /**
+   * Moves the object to the right based on its speed.
+   */
   moveRight() {
     this.x += this.speed;
     this.lastMoveTimestamp = Date.now();
     this.walking_sound.play();
   }
 
+  /**
+   * Moves the object to the left based on its speed.
+   */
   moveLeft() {
     this.x -= this.speed;
     this.lastMoveTimestamp = Date.now();
   }
 
+  /**
+   * Plays an animation for the object based on a list of images.
+   * @param {string[]} images - List of paths to the animation images.
+   */
   playAnimation(images) {
     let i = this.currentImage % images.length; // let i = 0 % 6; Rest 0
 
@@ -58,12 +84,19 @@ class MovableObject extends DrawableObject {
     this.currentImage++;
   }
 
+  /**
+   * Makes the object jump.
+   */
   jump() {
     return (this.speedY = 30);
     this.lastMoveTimestamp = Date.now();
   }
 
-  // Bessere Formel zur Kollisionsberechnung (Genauer)
+  /**
+   * Checks if the object is colliding with another object.
+   * @param {Object} obj - The object to check collision against.
+   * @returns {boolean} - Returns true if colliding, false otherwise.
+   */
   isColliding(obj) {
     // Überprüfe, ob sich die Rechtecke nicht überschneiden
     if (
@@ -85,6 +118,9 @@ class MovableObject extends DrawableObject {
     return true;
   }
 
+  /**
+   * Reduces the energy of the object when hit.
+   */
   hit() {
     this.energy -= 2;
 
@@ -95,10 +131,18 @@ class MovableObject extends DrawableObject {
     }
   }
 
+  /**
+   * Checks if the object is dead (energy is 0).
+   * @returns {boolean}
+   */
   isDead() {
     return this.energy == 0;
   }
 
+  /**
+   * Checks if the object is hurt based on the time since the last hit.
+   * @returns {boolean}
+   */
   isHurt(obj) {
     let timepassed = new Date().getTime() - this.lastHit; // Difference in ms
     timepassed = timepassed / 1000; // Difference in seconds

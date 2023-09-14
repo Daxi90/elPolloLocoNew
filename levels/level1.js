@@ -1,6 +1,23 @@
+/**
+ * Represents the first level of the game.
+ * @type {Level}
+ */
 let level1;
 
+/**
+ * Initializes the game level with specified enemies, coins, bottles, clouds, and background objects.
+ * @param {World} world - The game world in which the level is initialized.
+ */
 function initLevel(world) {
+  /**
+   * Constructs a new level instance.
+   * @param {Enemy[]} enemies - List of enemy instances for the level.
+   * @param {Coins[]} coins - List of coin instances for the level.
+   * @param {Bottle[]} bottles - List of bottle instances for the level.
+   * @param {Cloud[]} clouds - List of cloud instances for the level.
+   * @param {BackgroundObject[]} backgroundObjects - List of background objects to render in the level.
+   */
+
   level1 = new Level(
     [new Chicken(), new Chicken(), new Chicken(), new Endboss()],
     [
@@ -53,5 +70,4 @@ function initLevel(world) {
       new BackgroundObject("img/5_background/layers/1_first_layer/2.png", 2157),
     ]
   );
-
 }
