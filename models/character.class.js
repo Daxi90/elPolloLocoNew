@@ -80,6 +80,9 @@ class Character extends MovableObject {
   /** @property {boolean} hasJumped - A flag that determines if the character has jumped. */
   hasJumped = false;
 
+  /** @property {number} direction - The direction the character is moving. */
+  direction = 1; // 1 = rechts, -1 = links
+
   /** @property {Audio} walking_sound - The sound played when the character is walking. */
   walking_sound = new Audio('audio/walking.mp3');
 
@@ -125,10 +128,12 @@ class Character extends MovableObject {
       this.walking_sound.pause();
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.otherDirection = false;
+        this.direction = 1;
         this.moveRight();
       }
       if (this.world.keyboard.LEFT && this.x > 0) {
         this.otherDirection = true;
+        this.direction = -1;
         this.moveLeft();
         this.walking_sound.play();
       }

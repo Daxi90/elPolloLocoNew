@@ -99,7 +99,6 @@ class World {
   checkThrowObjects() {
     const currentTime = Date.now();
     const oneSecond = 1000;
-
     if (
       this.keyboard.D &&
       currentTime - this.lastThrown > oneSecond &&
@@ -107,7 +106,8 @@ class World {
     ) {
       let bottle = new ThrowableObject(
         this.character.x + 100,
-        this.character.y + 100
+        this.character.y + 100,
+        this.character.direction
       );
       this.throwableObjects.push(bottle);
       this.lastThrown = currentTime; // Aktualisiere den Zeitstempel

@@ -25,6 +25,13 @@ class ThrowableObject extends MovableObject {
    * An array of image paths that represent the splash animation.
    * @type {string[]}
    */
+
+  /**
+   * Represents the direction in which the object will be thrown.
+   * @type {number} -1 for left, 1 for right.
+   */
+  direction = 1; // Defaultwert ist 1 (nach rechts)
+
   IMAGES_SPLASH = [
     "img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png",
     "img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png",
@@ -39,13 +46,14 @@ class ThrowableObject extends MovableObject {
    * @param {number} x - The x-coordinate where the object starts.
    * @param {number} y - The y-coordinate where the object starts.
    */
-  constructor(x, y) {
+  constructor(x, y, characterDirection) {
     super().loadImage("img/6_salsa_bottle/salsa_bottle.png");
     this.loadImages(this.IMAGES_SPLASH);
     this.x = x;
     this.y = y;
     this.height = 50;
     this.width = 60;
+    this.direction = characterDirection;
     this.throw();
   }
 
@@ -56,9 +64,9 @@ class ThrowableObject extends MovableObject {
     this.speedY = 30;
     this.applyGravity();
     setInterval(() => {
-      this.x += 10;
+      this.x += 10 * this.direction; // Richtung berücksichtigen
     }, 25);
-
+  
     this.lastThrown = Date.now();
   }
 
