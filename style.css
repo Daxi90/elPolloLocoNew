@@ -138,6 +138,10 @@ canvas {
   #turnScreen {
     display: flex;
   }
+
+  #toggleFullScreen{
+    display: none;
+  }
 }
 
 @media only screen and (max-height: 480px) {
@@ -156,7 +160,7 @@ canvas {
   }
 }
 
-@media only screen and (max-height: 860px) {
+@media only screen and (max-height: 800px) {
   #instructions {
     display: none;
   }
@@ -205,4 +209,10 @@ canvas {
   border-radius: 8px;
   font-size: 35px;
   box-shadow: 5px 5px 5px black;
+}
+
+
+  :fullscreen canvas {
+    width: 100vw;  /* 100% der Viewport-Breite */
+    height: 100vh; /* 100% der Viewport-Höhe */
 }

@@ -79,7 +79,8 @@ class World {
           this.character.walking_sound.pause();
           setTimeout(() => {
             this.clearAllIntervals();
-            document.getElementById("startScreen").classList.remove("d-none");
+            this.showGameOverScreen();
+            document.getElementById("winHeadline").classList.remove("d-none");
             this.game_sound.pause();
           }, 3000); // Warte 3 Sekunden
 
@@ -281,7 +282,7 @@ class World {
     }
 
     mo.draw(this.ctx);
-    //mo.drawFrame(this.ctx); // UNCOMMENT TO DRAW FRAMES AROUND ENEMIES AND CHARACTER
+    // ADD mo.drawFrame(this.ctx); HERE TO DRAW FRAMES AROUND ENEMIES AND CHARACTER
 
     if (mo.otherDirection) {
       this.flipImageBack(mo);

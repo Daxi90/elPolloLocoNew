@@ -32,8 +32,9 @@
   </head>
   <body>
     <h1>El pollo loco</h1>
-    <div class="canvas-container">
+    <div id="fullscreen" class="canvas-container">
       <canvas id="canvas" width="720" height="480"> </canvas>
+      <img id="toggleFullScreen" onclick="enterFullscreen(document.getElementById('fullscreen'));"style="width: 35px; position: absolute; bottom: 8px; right: 8px; cursor: pointer;" src="img/controls/fullscreen.svg" alt="Fullscreen">
       <div id="controls">
         <div id="move">
           <div class="arrow" id="leftArrow">
@@ -83,7 +84,9 @@
     </div>
 
     <div class="d-none" id="endScreen">
+      
       <img src="./img/9_intro_outro_screens/game_over/game over!.png" alt="" />
+      <h1 id="winHeadline" class="d-none" style="position:absolute; top: 35px; left:50%; font-size: 100px; transform: translateX(-50%);">YOU WIN</h1>
       <button onclick="init();">Restart Game</button>
     </div>
     <div id="turnScreen">
