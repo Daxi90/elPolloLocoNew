@@ -23,6 +23,7 @@ class World {
   coin_sound = new Audio("audio/coin.mp3");
   splash_sound = new Audio("audio/splash.mp3");
   game_sound = new Audio("audio/gamesound.mp3");
+  chicken_sound = new Audio("audio/chicken.mp3");
 
   /**
    * Create a World.
@@ -148,6 +149,9 @@ class World {
       if (this.character.isColliding(enemy)) {
         if (this.character.isMovingDown() && !enemy.isDead()) {
           enemy.hit(); // Schaden zufügen, wenn der Charakter auf den Gegner springt
+          if(soundOn){
+            this.chicken_sound.play();
+          }
           this.character.jump(); // Charakter springt leicht nach dem Treffen des Gegners
         } else if (this.canCharacterHit(enemy)) {
           this.character.hit(); // Charakter nimmt Schaden, wenn er den Gegner anders berührt
@@ -202,6 +206,9 @@ class World {
         if (throwableObject.isColliding(enemy) && !throwableObject.isHit) {
           if (!enemy.isDead()) {
             enemy.hit();
+            if(soundOn){
+              this.chicken_sound.play();
+            }
             throwableObject.isHit = true; // Setzen des Flaschenzustands auf getroffen
             throwableObject.animateSplash(); // Start der Splash-Animation
             if(soundOn){

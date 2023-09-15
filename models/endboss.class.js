@@ -33,9 +33,8 @@ class Endboss extends MovableObject {
    */
   hadFirstContact = false;
 
-  maxDistance = 1500;
-  
-  startingPosition = 2300;
+  LEFT_BOUNDARY = 300;
+  RIGHT_BOUNDARY = 2300;
 
   IMAGES_WALKING = [
     "img/4_enemie_boss_chicken/1_walk/G1.png",
@@ -92,51 +91,59 @@ class Endboss extends MovableObject {
     this.animate();
   }
 
-  /**
- * Animates the end boss based on its state.
- */
-animate() {
-  let i = 0;
-
-  const interval = setInterval(() => {
-    if (this.hadFirstContact) {
-      this.otherDirection = false;
-      this.moveLeft();
-
-      // Umdrehen, wenn der Endboss eine gewisse Strecke nach links gelaufen ist
-      if (this.x <= 300) {  // 300 kann je nach gewünschter Strecke angepasst werden
-        this.hadFirstContact = false;
-      }
-    } else {
-      // Bewegung nach rechts
-      this.otherDirection = true;
-      this.moveRight();
-
-      // Umdrehen, wenn der Endboss eine gewisse Strecke nach rechts gelaufen ist
-      if (this.x >= 2300) {  // 2300 ist der ursprüngliche Startwert von x
-        this.hadFirstContact = true;
+    /**
+   * Animates the end boss based on its state.
+   */
+    animate() {
+      let i = 0;
+      
+      const animationInterval = 200;
+      const interval = setInterval(() => {
+        if (this.hadFirstContact) {
+          this.moveTowardsBoundary(this.LEFT_BOUNDARY, false, () => this.hadFirstContact = false);
+        } else {
+          this.moveTowardsBoundary(this.RIGHT_BOUNDARY, true, () => this.hadFirstContact = true);
+        }
+  
+        if (this.isHurt()) {
+          this.playAnimation(this.IMAGES_HURT);
+        } else if (this.isDead()) {
+          this.playAnimation(this.IMAGES_DEAD);
+        } else {
+          this.playRegularAnimations(i);
+          i = (i < 20) ? i + 1 : 0;
+        }
+  
+        if (world.character.x > 1600 && !this.hadFirstContact) {
+          i = 0;
+          this.hadFirstContact = true;
+        }
+      }, animationInterval);
+    }
+  
+    moveTowardsBoundary(boundary, moveRight, callbackWhenReached) {
+      if (moveRight) {
+        this.otherDirection = true;
+        this.moveRight();
+        if (this.x >= boundary) {
+          callbackWhenReached();
+        }
+      } else {
+        this.otherDirection = false;
+        this.moveLeft();
+        if (this.x <= boundary) {
+          callbackWhenReached();
+        }
       }
     }
-
-    if (this.isHurt()) {
-      this.playAnimation(this.IMAGES_HURT);
-    } else if (this.isDead()) {
-      this.playAnimation(this.IMAGES_DEAD);
-    } else {
-      if (i < 10) {
-        // Walk animation
+  
+    playRegularAnimations(i) {
+      const alertAnimationTrigger = 10;
+      if (i < alertAnimationTrigger) {
         this.playAnimation(this.IMAGES_WALKING);
       } else {
         this.playAnimation(this.IMAGES_ALERT);
       }
     }
-    i++;
-
-    if (world.character.x > 1600 && !this.hadFirstContact) {
-      i = 0;
-      this.hadFirstContact = true;
-    }
-  }, 200);
-}
 
 }

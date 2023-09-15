@@ -116,11 +116,19 @@ canvas {
   align-items: center;
   justify-content: center;
   position: absolute;
+  text-align: center;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   background-color: white;
+}
+
+
+@media (orientation: portrait) {
+  #turnScreen {
+    display: flex !important;
+  }
 }
 
 @media only screen and (max-width: 720px) {
@@ -132,11 +140,7 @@ canvas {
     display: flex;
   }
   #instructions {
-    width: 90%;
-  }
-
-  #turnScreen {
-    display: flex;
+    width: 80%;
   }
 
   #toggleFullScreen{
@@ -149,8 +153,13 @@ canvas {
     height: 100vh;
     width: 100vw;
   }
-  h1 {
+  h1{
     display: none;
+  }
+  #winHeadline {
+    display: flex;
+    text-align: center;
+    font-size: 25px !important;
   }
   #controls {
     display: flex;
@@ -197,17 +206,17 @@ canvas {
 #startScreen button,
 #endScreen button {
   position: absolute;
-  bottom: 50%;
+  top: 30%;
   left: 50%;
   background-color: #ff9600;
   color: white;
   border: none;
-  width: 350px;
-  height: 100px;
+  width: 150px;
+  height: 40px;
   transform: translateX(-50%);
   cursor: pointer;
   border-radius: 8px;
-  font-size: 35px;
+  font-size: 20px;
   box-shadow: 5px 5px 5px black;
 }
 

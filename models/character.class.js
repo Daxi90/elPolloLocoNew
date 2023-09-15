@@ -122,78 +122,97 @@ class Character extends MovableObject {
     /**
    * Animates the character based on its actions and the environment.
    */
-  animate() {
-     // main game loop handling character movements and actions
-    setInterval(() => {
-      if(soundOn){
-      this.walking_sound.pause();
-      }
-      if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-        this.otherDirection = false;
-        this.direction = 1;
-        this.moveRight();
-        if (soundOn) {
-            this.walking_sound.play();
-        } else {
-            this.walking_sound.pause();
-        }
-    }
-    
-    if (this.world.keyboard.LEFT && this.x > 0) {
-        this.otherDirection = true;
-        this.direction = -1;
-        this.moveLeft();
-        if (soundOn) {
-            this.walking_sound.play();
-        } else {
-            this.walking_sound.pause();
-        }
-    }
-    
+    animate() {
+      this.mainGameLoop();
+      this.handleIdleAnimations();
+      this.handleStateAnimations();
+  }
 
-      if(this.world.keyboard.SPACE && !this.isAboveGround()){
-        this.jump();
-        if(soundOn){
-        this.jump_sound.play();
-        }
-      }
+  mainGameLoop() {
+      setInterval(() => {
+          if (soundOn) {
+              this.walking_sound.pause();
+          }
 
-      this.world.camera_x = -this.x + 100;
-    }, 1000 / 60);
+          if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+              this.handleWalkRight();
+          }
 
-    // Idle animations interval
-    setInterval(() => {
-      if (Date.now() - this.lastMoveTimestamp >= 3000) {
-        this.playAnimation(this.IMAGES_IDLE);
-      }
+          if (this.world.keyboard.LEFT && this.x > 0) {
+              this.handleWalkLeft();
+          }
 
-      if (Date.now() - this.lastMoveTimestamp >= 10000) {
-        this.playAnimation(this.IMAGES_LONG_IDLE);
-      }
-    }, 700);
+          if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+              this.handleJump();
+          }
 
-    // Various animations based on character states
-    setInterval(() => {
-      // logic for animations like jumping, hurt, dead, etc..
-      if(this.isHurt()){
-        this.playAnimation(this.IMAGES_HURT);
+          this.world.camera_x = -this.x + 100;
+      }, 1000 / 60);
+  }
+
+  handleWalkRight() {
+      this.otherDirection = false;
+      this.direction = 1;
+      this.moveRight();
+      if (soundOn) {
+          this.walking_sound.play();
       }
-      else if(this.isDead()){
-        this.playAnimation(this.IMAGES_DEAD);
+  }
+
+  handleWalkLeft() {
+      this.otherDirection = true;
+      this.direction = -1;
+      this.moveLeft();
+      if (soundOn) {
+          this.walking_sound.play();
       }
-      else if (this.isAboveGround()) {
-        this.hasJumped = true; // setzen Sie hasJumped auf true, wenn der Charakter in der Luft ist
-        this.playAnimation(this.IMAGES_JUMPING);
-      } else {
-        if (this.hasJumped) {
-          this.hasJumped = false; // setzen Sie hasJumped auf false, nachdem der Charakter gelandet ist
-          this.img.src = this.IMAGES_WALKING[0]; // laden Sie das erste Bild von IMAGES_WALKING
-        }
-        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-          //Walk animation
+  }
+
+  handleJump() {
+      this.jump();
+      if (soundOn) {
+          this.jump_sound.play();
+      }
+  }
+
+  handleIdleAnimations() {
+      setInterval(() => {
+          if (Date.now() - this.lastMoveTimestamp >= 3000) {
+              this.playAnimation(this.IMAGES_IDLE);
+          }
+
+          if (Date.now() - this.lastMoveTimestamp >= 10000) {
+              this.playAnimation(this.IMAGES_LONG_IDLE);
+          }
+      }, 700);
+  }
+
+  handleStateAnimations() {
+      setInterval(() => {
+          if (this.isHurt()) {
+              this.playAnimation(this.IMAGES_HURT);
+          } else if (this.isDead()) {
+              this.playAnimation(this.IMAGES_DEAD);
+          } else if (this.isAboveGround()) {
+              this.handleJumpingState();
+          } else {
+              this.handleGroundState();
+          }
+      }, 50);
+  }
+
+  handleJumpingState() {
+      this.hasJumped = true;
+      this.playAnimation(this.IMAGES_JUMPING);
+  }
+
+  handleGroundState() {
+      if (this.hasJumped) {
+          this.hasJumped = false;
+          this.img.src = this.IMAGES_WALKING[0];
+      }
+      if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
           this.playAnimation(this.IMAGES_WALKING);
-        }
       }
-    }, 50);
   }
 }
