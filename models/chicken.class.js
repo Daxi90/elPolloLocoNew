@@ -35,7 +35,7 @@ class Chicken extends MovableObject{
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
 
         /** @property {number} x - The x-coordinate of the chicken, randomized between certain values. */
-        this.x = 300 + Math.random() * 500; // Zahl zwischen 500 und 700
+        this.x = 400 + Math.random() * 500;
 
         /** @property {number} speed - The speed of the chicken's movement, randomized between certain values. */
         this.speed = 0.15 + Math.random() * 0.25;

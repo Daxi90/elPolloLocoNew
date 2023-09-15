@@ -1,188 +1,208 @@
 @font-face {
-    font-family: 'Zabras';
-    src: url('fonts/Zabars.ttf');
+  font-family: "Zabras";
+  src: url("fonts/Zabars.ttf");
 }
 
-
-body{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-image: url(./img/5_background/elPolloLocoBG.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100vh;
-    font-family: 'Zabras', Arial, Helvetica, sans-serif;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url(./img/5_background/elPolloLocoBG.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  font-family: "Zabras", Arial, Helvetica, sans-serif;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
 }
 
-h1{
-    font-size: 64px;
-    letter-spacing: 3px;
-    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+h1 {
+  font-size: 64px;
+  letter-spacing: 3px;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
 }
 
-canvas{
-    background-color: black;
-    display: block;
-    position: relative;
+canvas {
+  background-color: black;
+  display: block;
+  position: relative;
 }
 
 #instructions {
-
-    display: flex;
-    flex-direction: column;
-    border: 2px solid #ff9600;  /* Adding border to make it pop */
-    width: 70%;
-    padding: 20px;
-    overflow: scroll;
-    max-height: 250px;
-    position: absolute;
-    bottom: 10%;
-    left: 50%;
-    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background for readability while keeping game background visible */
-    transform: translateX(-50%);
-    border-radius: 16px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
-    text-align: center; /* Aligning text to the center */
-    z-index: 1; /* Ensuring it's above other elements */
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 25px;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #ff9600; /* Adding border to make it pop */
+  width: 70%;
+  padding: 20px;
+  overflow: scroll;
+  max-height: 250px;
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.9
+  ); /* Slightly transparent background for readability while keeping game background visible */
+  transform: translateX(-50%);
+  border-radius: 16px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+  text-align: center; /* Aligning text to the center */
+  z-index: 1; /* Ensuring it's above other elements */
 }
 
 #instructions h2 {
-    color: #ff9600; /* Using the orange color for headers */
-    font-size: 24px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    text-decoration: underline;
+  color: #ff9600; /* Using the orange color for headers */
+  font-size: 24px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-decoration: underline;
 }
 
-#instructions ul, #instructions ol {
-    padding-left: 20px; /* Adjust padding as necessary */
-    margin: 10px 0; /* Adjusting margin for lists */
+#instructions ul,
+#instructions ol {
+  padding-left: 20px; /* Adjust padding as necessary */
+  margin: 10px 0; /* Adjusting margin for lists */
 }
 
 #instructions li {
-    margin: 5px 0; /* Verringern des Abstands zwischen Listenelementen */
-    list-style-position: inside; /* Moves bullet/number inside the list item content for a tighter fit */
+  margin: 5px 0; /* Verringern des Abstands zwischen Listenelementen */
+  list-style-position: inside; /* Moves bullet/number inside the list item content for a tighter fit */
 }
 
 #instructions strong {
-    color: #ff9600; /* Using the orange color for highlighting */
+  color: #ff9600; /* Using the orange color for highlighting */
 }
-
-
 
 .canvas-container {
-    position: relative;
-    display: inline-block; /* You can also use block if you want the container to take full width */
+  position: relative;
+  display: inline-block; /* You can also use block if you want the container to take full width */
 }
 
-#controls{
-    position: absolute;
-    bottom: 0px;
-    padding: 16px;
-    padding-bottom: 4px;
-    width: calc(100% - 32px);
-    max-width: 720px;
-    display: none;
-    justify-content: space-between;
+#controls {
+  position: absolute;
+  bottom: 0px;
+  padding: 16px;
+  padding-bottom: 4px;
+  width: calc(100% - 32px);
+  max-width: 720px;
+  display: none;
+  justify-content: space-between;
 }
 
-#move, #actions{
-    display: flex;
-    gap: 16px;
+#move,
+#actions {
+  display: flex;
+  gap: 16px;
 }
 
-.arrow{
-    background-color: #ff9600;
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.arrow {
+  background-color: #ff9600;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@media only screen and (max-width: 720px){
-    canvas{
-        width: 100%;
-    }
-
-    #controls{
-        display: flex;
-    }
-    #instructions{
-        width: 90%;
-       
-    }
+#turnScreen {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
 }
 
-
-
-@media only screen and (max-height: 480px){
-    canvas{
-        height: 100vh;
-        width: 100vw;
-    }
-    h1{
-        display: none;
-    }
-    #controls{
-        display: flex;
-    }
-    #instructions{
-        display: none;
-       
-    }
-}
-
-@media only screen and (max-height: 860px){
-
-    #instructions{
-        display: none;
-       
-    }
-}
-
-.d-none{
-    display: none;
-}
-
-#startScreen, #endScreen{
-    background-image: url(./img/9_intro_outro_screens/start/startscreen_2.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left:0;
-    right: 0;
-}
-
-#endScreen{
-    background-image: url(./img/5_background/first_half_background.png);
-}
-
-#endScreen img{
+@media only screen and (max-width: 720px) {
+  canvas {
     width: 100%;
-    height: 100vh;
+  }
+
+  #controls {
+    display: flex;
+  }
+  #instructions {
+    width: 90%;
+  }
+
+  #turnScreen {
+    display: flex;
+  }
 }
 
-#startScreen button, #endScreen button{
-    position: absolute;
-    bottom: 50%;
-    left: 50%;
-    background-color: #ff9600;
-    color: white;
-    border:none;
-    width: 350px;
-    height: 100px;
-    transform: translateX(-50%);
-    cursor: pointer;
-    border-radius: 8px;
-    font-size: 35px;
-    box-shadow: 5px 5px 5px black;
+@media only screen and (max-height: 480px) {
+  canvas {
+    height: 100vh;
+    width: 100vw;
+  }
+  h1 {
+    display: none;
+  }
+  #controls {
+    display: flex;
+  }
+  #instructions {
+    display: none;
+  }
+}
+
+@media only screen and (max-height: 860px) {
+  #instructions {
+    display: none;
+  }
+  #turnScreen {
+    display: none;
+  }
+}
+
+.d-none {
+  display: none;
+}
+
+#startScreen,
+#endScreen {
+  background-image: url(./img/9_intro_outro_screens/start/startscreen_2.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#endScreen {
+  background-image: url(./img/5_background/first_half_background.png);
+}
+
+#endScreen img {
+  width: 100%;
+  height: 100vh;
+}
+
+#startScreen button,
+#endScreen button {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  background-color: #ff9600;
+  color: white;
+  border: none;
+  width: 350px;
+  height: 100px;
+  transform: translateX(-50%);
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 35px;
+  box-shadow: 5px 5px 5px black;
 }

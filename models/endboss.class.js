@@ -33,6 +33,10 @@ class Endboss extends MovableObject {
    */
   hadFirstContact = false;
 
+  maxDistance = 1500;
+  
+  startingPosition = 2300;
+
   IMAGES_WALKING = [
     "img/4_enemie_boss_chicken/1_walk/G1.png",
     "img/4_enemie_boss_chicken/1_walk/G2.png",
@@ -89,34 +93,50 @@ class Endboss extends MovableObject {
   }
 
   /**
-   * Animates the end boss based on its state.
-   */
-  animate() {
-    let i = 0;
+ * Animates the end boss based on its state.
+ */
+animate() {
+  let i = 0;
 
-    const interval = setInterval(() => {
-      if (this.hadFirstContact) {
-        this.moveLeft();
+  const interval = setInterval(() => {
+    if (this.hadFirstContact) {
+      this.otherDirection = false;
+      this.moveLeft();
+
+      // Umdrehen, wenn der Endboss eine gewisse Strecke nach links gelaufen ist
+      if (this.x <= 300) {  // 300 kann je nach gewünschter Strecke angepasst werden
+        this.hadFirstContact = false;
       }
+    } else {
+      // Bewegung nach rechts
+      this.otherDirection = true;
+      this.moveRight();
 
-      if (this.isHurt()) {
-        this.playAnimation(this.IMAGES_HURT);
-      } else if (this.isDead()) {
-        this.playAnimation(this.IMAGES_DEAD);
+      // Umdrehen, wenn der Endboss eine gewisse Strecke nach rechts gelaufen ist
+      if (this.x >= 2300) {  // 2300 ist der ursprüngliche Startwert von x
+        this.hadFirstContact = true;
+      }
+    }
+
+    if (this.isHurt()) {
+      this.playAnimation(this.IMAGES_HURT);
+    } else if (this.isDead()) {
+      this.playAnimation(this.IMAGES_DEAD);
+    } else {
+      if (i < 10) {
+        // Walk animation
+        this.playAnimation(this.IMAGES_WALKING);
       } else {
-        if (i < 10) {
-          // Walk animation
-          this.playAnimation(this.IMAGES_WALKING);
-        } else {
-          this.playAnimation(this.IMAGES_ALERT);
-        }
+        this.playAnimation(this.IMAGES_ALERT);
       }
-      i++;
+    }
+    i++;
 
-      if (world.character.x > 1600 && !this.hadFirstContact) {
-        i = 0;
-        this.hadFirstContact = true; // Set to 'true' and not 'false'
-      }
-    }, 200);
-  }
+    if (world.character.x > 1600 && !this.hadFirstContact) {
+      i = 0;
+      this.hadFirstContact = true;
+    }
+  }, 200);
+}
+
 }

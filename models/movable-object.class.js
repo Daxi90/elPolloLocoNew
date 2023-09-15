@@ -61,7 +61,7 @@ class MovableObject extends DrawableObject {
   moveRight() {
     this.x += this.speed;
     this.lastMoveTimestamp = Date.now();
-    this.walking_sound.play();
+       
   }
 
   /**

@@ -19,8 +19,10 @@ class World {
   totalCoins;
   totalBottles;
 
+
   coin_sound = new Audio("audio/coin.mp3");
   splash_sound = new Audio("audio/splash.mp3");
+  game_sound = new Audio("audio/gamesound.mp3");
 
   /**
    * Create a World.
@@ -36,7 +38,13 @@ class World {
     this.totalCoins = this.level.coins.length;
     this.totalBottles = this.level.bottles.length;
     this.run();
+
+    if(soundOn){
+      this.game_sound.play();
+      this.game_sound.volume = 0.3;
+    }
   }
+  
 
   /**
    * Sets the world property for the character.
@@ -64,6 +72,7 @@ class World {
       this.showGameOverScreen();
       this.clearAllIntervals();
       this.character.walking_sound.pause();
+      this.game_sound.pause();
     } else {
       this.level.enemies.forEach((enemy) => {
         if (enemy instanceof Endboss && enemy.energy == 0) {
@@ -71,6 +80,7 @@ class World {
           setTimeout(() => {
             this.clearAllIntervals();
             document.getElementById("startScreen").classList.remove("d-none");
+            this.game_sound.pause();
           }, 3000); // Warte 3 Sekunden
 
           return;
@@ -157,7 +167,9 @@ class World {
         this.coinBar.setPercentage(
           (this.coinsCollected / this.totalCoins) * 100
         );
+        if(soundOn){
         this.coin_sound.play();
+        }
       }
     });
   }
@@ -173,7 +185,9 @@ class World {
         this.bottleBar.setPercentage(
           (this.bottlesCollected / this.totalBottles) * 100
         );
+        if(soundOn){
         this.splash_sound.play();
+        }
       }
     });
   }
@@ -189,7 +203,9 @@ class World {
             enemy.hit();
             throwableObject.isHit = true; // Setzen des Flaschenzustands auf getroffen
             throwableObject.animateSplash(); // Start der Splash-Animation
+            if(soundOn){
             this.splash_sound.play();
+            }
           }
         }
       });

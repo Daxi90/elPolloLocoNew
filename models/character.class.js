@@ -125,22 +125,37 @@ class Character extends MovableObject {
   animate() {
      // main game loop handling character movements and actions
     setInterval(() => {
+      if(soundOn){
       this.walking_sound.pause();
+      }
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.otherDirection = false;
         this.direction = 1;
         this.moveRight();
-      }
-      if (this.world.keyboard.LEFT && this.x > 0) {
+        if (soundOn) {
+            this.walking_sound.play();
+        } else {
+            this.walking_sound.pause();
+        }
+    }
+    
+    if (this.world.keyboard.LEFT && this.x > 0) {
         this.otherDirection = true;
         this.direction = -1;
         this.moveLeft();
-        this.walking_sound.play();
-      }
+        if (soundOn) {
+            this.walking_sound.play();
+        } else {
+            this.walking_sound.pause();
+        }
+    }
+    
 
       if(this.world.keyboard.SPACE && !this.isAboveGround()){
         this.jump();
+        if(soundOn){
         this.jump_sound.play();
+        }
       }
 
       this.world.camera_x = -this.x + 100;

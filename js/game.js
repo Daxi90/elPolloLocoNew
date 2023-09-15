@@ -1,6 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let soundOn = true;
 
 /**
  * Initializes the game's settings.
@@ -142,3 +143,19 @@ window.addEventListener("keyup", (e) => {
     keyboard.D = false;
   }
 });
+
+function muteAudio() {
+  // Toggle soundOn
+  soundOn = !soundOn;
+
+  // Get the audio image element
+  let audioImg = document.querySelector("img[alt='Audio On']");
+
+  // Toggle the image's src
+  if (soundOn) {
+      audioImg.src = "img/controls/audio-on.svg";
+  } else {
+      audioImg.src = "img/controls/audio-muted.svg"; 
+  }
+}
+
